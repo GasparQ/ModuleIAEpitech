@@ -249,7 +249,9 @@ class AI:
         state = self.state.serialise_state()
         self.log.write(state + "\n")
 
-    def update_state(self, filename):
+    def update_state(self, filename=None):
+        if filename is None:
+            filename = './logs/log_game_{}.txt'.format(self.id)
         infos = open(filename, 'r')
         lines = infos.readlines()
         if len(lines) != self.line:

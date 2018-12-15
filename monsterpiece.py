@@ -1,5 +1,7 @@
 import random
 
+import sys
+
 import GAME_DATA
 from monster_ai import AI
 import action
@@ -46,6 +48,7 @@ class MonsterPiece(AI):
             self.choosenAction = action.Action(game, [None, None, None, None], game)
         self.transitions.append(self.choosenAction)
         self.moved = False
+        print('Mini turn begins: ', self.choosenAction, file=sys.stderr)
 
     def SaveTo(self, filename):
         file = open(filename, 'w')
@@ -98,6 +101,7 @@ class MonsterPiece(AI):
     def GeneratePossibleActions(self, game, tilesLeft):
         self.possibleActions = []
 
+        print('tiles left: ', tilesLeft, file=sys.stderr)
         for tile in tilesLeft:
             actions = [action.Action(game, [tile, None, None, None], game)]
             character = game.board.GetCharacter(tile)
@@ -123,8 +127,8 @@ class MonsterPiece(AI):
                 if self.choosenAction is None or val > maxValue:
                     maxValue = val
                     self.choosenAction = currAct
-        # print('Actions:', self.possibleActions)
-        # print('Choose:', self.choosenAction)
+        print('Actions:', self.possibleActions, file=sys.stderr)
+        print('Choose:', self.choosenAction, file=sys.stderr)
 
     def GetReward(self, game):
         raise NotImplemented("Method GetReward is not implemented")

@@ -53,7 +53,10 @@ class VAI(AI):
             response = '0' if self.powerChoice is None or self.powerChoice is False else '1'
         elif line.startswith("positions disponibles :"):
             move = self.ai.GetMove(self.game, self.pickedTile)
+
+            print('Move:', move, file=sys.stderr)
             response = str(move)
+            print('Response:', response, file=sys.stderr)
 
             match = self.move_regex.match(line)
             if match:

@@ -228,7 +228,7 @@ except:
     print('Files already cleared')
 
 joueurs = [joueur(0), joueur(1)]
-Thread(target=dummy.lancer_inspector).start()
+Thread(target=inspector.lancer).start()
 Thread(target=ghost.lancer).start()
 partie(joueurs).lancer()
 print('Exit du serveur')
