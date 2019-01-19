@@ -1,5 +1,9 @@
 from time import sleep
 
+import os
+
+import sys
+
 
 def get_question(index):
     try:
@@ -19,8 +23,19 @@ def send_response(index, response):
 
 
 def runai(ai):
-    while not ai.state.gameOver:
+    try:
+        os.mkdir('./%d' % ai.id)
+    except:
+        pass
 
+    try:
+        open('./%d/infos.txt' % ai.id, 'w').close()
+        open('./%d/questions.txt' % ai.id, 'w').close()
+        open('./%d/reponses.txt' % ai.id, 'w').close()
+    except:
+        pass
+
+    while not ai.state.gameOver:
         question = ''
         while len(question) == 0 and not ai.state.gameOver:
             question = get_question(ai.id)

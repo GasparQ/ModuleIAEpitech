@@ -54,18 +54,19 @@ class VAI(AI):
         elif line.startswith("positions disponibles :"):
             move = self.ai.GetMove(self.game, self.pickedTile)
 
-            print('Move:', move, file=sys.stderr)
+            # print('Move:', move, file=sys.stderr)
             response = str(move)
-            print('Response:', response, file=sys.stderr)
+            # print('Response:', response, file=sys.stderr)
 
             match = self.move_regex.match(line)
             if match:
                 possibles = match.group(1).replace(' ', '').split(',')
                 if response not in possibles:
-                    print('Trying to move at', response, 'but possible moves are', possibles, file=sys.stderr)
+                    response = random.choice(possibles)
+                    # print('Trying to move at', response, 'but possible moves are', possibles, file=sys.stderr)
                     if self.pickedTile is not None:
                         char = self.game.board.GetCharacter(self.pickedTile)
-                        print(char, file=sys.stderr)
+                        # print(char, file=sys.stderr)
 
             self.moved = True
         elif self.pickedTile in self.power_handlers.keys() and self.powerChoice is not None:

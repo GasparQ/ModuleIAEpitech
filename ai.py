@@ -106,8 +106,8 @@ class AI:
         self.check_red = False
         self.choose = False
 
-        codecs.open('./states/states_{}_{}.txt'.format(self.id, self.is_ghost), "w", "utf-8").close()
-        self.log = codecs.open('./states/states_{}_{}.txt'.format(self.id, self.is_ghost), "a", "utf-8")
+        # codecs.open('./states/states_{}_{}.txt'.format(self.id, self.is_ghost), "w", "utf-8").close()
+        # self.log = codecs.open('./states/states_{}_{}.txt'.format(self.id, self.is_ghost), "a", "utf-8")
 
     def reset(self):
         self.score = -1
@@ -137,6 +137,8 @@ class AI:
             self.state.gameOver = True
             return "END GAME"
         self.update_state('./%d/infos.txt' % self.id)
+        if self.state.gameOver:
+            return "END GAME"
         return self.play(line)
 
     def play(self, line):
@@ -247,7 +249,7 @@ class AI:
 
     def update_state_file(self):
         state = self.state.serialise_state()
-        self.log.write(state + "\n")
+        # self.log.write(state + "\n")
 
     def update_state(self, filename=None):
         if filename is None:
@@ -264,7 +266,8 @@ class AI:
         self.parse_line(line)
 
     def close(self):
-        self.log.close()
+        # self.log.close()
+        pass
 
     def end(self):
         raise NotImplemented("Method play is not implemented")

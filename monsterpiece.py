@@ -48,7 +48,7 @@ class MonsterPiece(AI):
             self.choosenAction = action.Action(game, [None, None, None, None], game)
         self.transitions.append(self.choosenAction)
         self.moved = False
-        print('Mini turn begins: ', self.choosenAction, file=sys.stderr)
+        # print('Mini turn begins: ', self.choosenAction, file=sys.stderr)
 
     def SaveTo(self, filename):
         file = open(filename, 'w')
@@ -101,7 +101,7 @@ class MonsterPiece(AI):
     def GeneratePossibleActions(self, game, tilesLeft):
         self.possibleActions = []
 
-        print('tiles left: ', tilesLeft, file=sys.stderr)
+        # print('tiles left: ', tilesLeft, file=sys.stderr)
         for tile in tilesLeft:
             actions = [action.Action(game, [tile, None, None, None], game)]
             character = game.board.GetCharacter(tile)
@@ -127,8 +127,8 @@ class MonsterPiece(AI):
                 if self.choosenAction is None or val > maxValue:
                     maxValue = val
                     self.choosenAction = currAct
-        print('Actions:', self.possibleActions, file=sys.stderr)
-        print('Choose:', self.choosenAction, file=sys.stderr)
+        # print('Actions:', self.possibleActions, file=sys.stderr)
+        # print('Choose:', self.choosenAction, file=sys.stderr)
 
     def GetReward(self, game):
         raise NotImplemented("Method GetReward is not implemented")
@@ -154,10 +154,14 @@ class MonsterPiece(AI):
         return self.choosenAction.actions[action.PICK]
 
     def GetPowerChoice(self, game, tile):
+        if self.choosenAction is None:
+            return None
         if self.moved:
             return self.choosenAction.actions[action.POST_POWER]
         return self.choosenAction.actions[action.PRE_POWER]
 
     def GetMove(self, game, tile):
         self.moved = True
+        if self.choosenAction is None:
+            return None
         return self.choosenAction.actions[action.MOVE]
